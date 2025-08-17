@@ -1,4 +1,5 @@
 import React from 'react';
+import Swal from 'sweetalert2';
 
 const AddCoffee = () => {
 
@@ -17,13 +18,22 @@ const AddCoffee = () => {
             body: JSON.stringify(newCoffee)
         })
             .then(res => res.json())
-            .then(data => console.log('after adding data in db: ', data));
+            .then(data => {
+                if (data.insertedId) {
+                    Swal.fire({
+                        title: "Coffee added successfully!",
+                        icon: "success",
+                        draggable: true
+                    });
+                    form.reset();
+                }
+            });
 
 
 
 
         // const name = form.name.value;
-        // const chef = form.chef.value;
+        // const quantity = form.quantity.value;
         // const supplier = form.supplier.value;
         // const taste = form.taste.value;
         // const category = form.category.value;
@@ -47,8 +57,8 @@ const AddCoffee = () => {
                     </fieldset>
 
                     <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-full border p-4">
-                        <label className="label text-xl font-semibold">Chef</label>
-                        <input type="text" name='chef' className="input w-full" placeholder="Enter coffee chef" />
+                        <label className="label text-xl font-semibold">Quantity</label>
+                        <input type="text" name='quantity' className="input w-full" placeholder="Enter quantity" />
                     </fieldset>
 
                     <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-full border p-4">
@@ -62,8 +72,8 @@ const AddCoffee = () => {
                     </fieldset>
 
                     <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-full border p-4">
-                        <label className="label text-xl font-semibold">Category</label>
-                        <input type="text" name='category' className="input w-full" placeholder="Enter coffee category" />
+                        <label className="label text-xl font-semibold">price</label>
+                        <input type="text" name='price' className="input w-full" placeholder="Enter coffee price" />
                     </fieldset>
 
                     <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-full border p-4">
