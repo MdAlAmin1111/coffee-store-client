@@ -4,6 +4,7 @@ import Home from "../components/Home";
 import AddCoffee from "../components/AddCoffee";
 import UpdateCoffee from "../components/UpdateCoffee";
 import CoffeeDetails from "../components/CoffeeDetails";
+import Loader from "../components/Loader";
 
 export const router = createBrowserRouter([
     {
@@ -14,20 +15,23 @@ export const router = createBrowserRouter([
                 index: true,
                 loader: () => fetch('http://localhost:3000/coffees'),
                 element: <Home></Home>,
-                hydrateFallbackElement: <h1>Loading</h1>
+                hydrateFallbackElement: <Loader></Loader>
             },
             {
                 path: 'addCoffee',
                 element: <AddCoffee></AddCoffee>
             },
             {
-                path: 'updateCoffee',
-                element: <UpdateCoffee></UpdateCoffee>
+                path: 'updateCoffee/:id',
+                loader: ({ params }) => fetch(`http://localhost:3000/coffees/${params.id}`),
+                element: <UpdateCoffee></UpdateCoffee>,
+                hydrateFallbackElement: <Loader></Loader>
             },
             {
                 path: 'coffee/:id',
-                loader: ({params})=>fetch(`http://localhost:3000/coffees/${params.id}`),
-                element: <CoffeeDetails></CoffeeDetails>
+                loader: ({ params }) => fetch(`http://localhost:3000/coffees/${params.id}`),
+                element: <CoffeeDetails></CoffeeDetails>,
+                hydrateFallbackElement: <Loader></Loader>
             }
         ]
 

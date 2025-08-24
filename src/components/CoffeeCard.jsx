@@ -57,7 +57,7 @@ const CoffeeCard = ({ coffee, coffees, setCoffees }) => {
                 </div>
                 <div className='*:rounded *:p-2 space-y-3'>
                     <Link to={`/coffee/${_id}`}><FaEye className='bg-[#D2B48C] cursor-pointer' color='white' size={35} /></Link>
-                    <MdModeEdit className='bg-[#3C393B] cursor-pointer' color='white' size={35} />
+                    <Link to={`/updateCoffee/${_id}`}><MdModeEdit className='bg-[#3C393B] cursor-pointer' color='white' size={35} /></Link>
                     <MdDelete onClick={() => handleDelete(_id)} className='bg-[#EA4744] cursor-pointer' color='white' size={35} />
                 </div>
             </div>
