@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
+import Swal from 'sweetalert2';
 
 const SingUp = () => {
 
@@ -30,8 +31,20 @@ const SingUp = () => {
                     },
                     body: JSON.stringify(userProfile)
                 })
-                .then(res=>res.json())
-                .then(data=>console.log(data))
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log(data)
+                        if (data.insertedId) {
+                            Swal.fire({
+                                position: "top-end",
+                                icon: "success",
+                                title: "Account has been created",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                        }
+
+                    })
             })
             .catch((error) => {
                 const errorMessage = error.message;
