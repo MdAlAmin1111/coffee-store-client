@@ -6,7 +6,7 @@ const SingUp = () => {
 
     const { createUser } = useContext(AuthContext);
 
-    const handleLogin = (e) => {
+    const handleSignUp = (e) => {
         e.preventDefault();
         const form = e.target;
         const formData = new FormData(form);
@@ -14,14 +14,23 @@ const SingUp = () => {
         // const password = formData.get('password');
 
         const data = Object.fromEntries(formData.entries());
-        const { email, password, ...userProfile } = data;
+        const { email, password, ...restData } = data;
+
+        // const userProfile = { email, ...restData }
 
         // create user in firebase
 
         createUser(email, password)
             .then((userCredential) => {
                 const user = userCredential.user;
-                console.log(user);
+                // console.log(user);
+
+                const userProfile = {
+                    email,
+                    ...restData,
+                    creationTime: user?.metadata?.creationTime,
+                    lastSignInTime: user?.metadata?.lastSignInTime
+                }
 
                 // save profile info in db
                 fetch('http://localhost:3000/users', {
@@ -33,10 +42,10 @@ const SingUp = () => {
                 })
                     .then(res => res.json())
                     .then(data => {
-                        console.log(data)
+                        // console.log(data)
                         if (data.insertedId) {
                             Swal.fire({
-                                position: "top-end",
+                                position: "center",
                                 icon: "success",
                                 title: "Account has been created",
                                 showConfirmButton: false,
@@ -57,7 +66,7 @@ const SingUp = () => {
         <div className="card bg-base-100 max-w-lg mx-auto shrink-0 shadow-2xl my-4">
             <div className="card-body">
                 <h1 className="text-5xl font-bold text-center">Sign up now!</h1>
-                <form onSubmit={handleLogin} className="fieldset">
+                <form onSubmit={handleSignUp} className="fieldset">
 
                     <label className="label">Name</label>
                     <input type="text" name='name' className="input w-full" placeholder="Name" />

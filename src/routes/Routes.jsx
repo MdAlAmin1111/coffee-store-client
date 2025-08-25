@@ -7,6 +7,7 @@ import CoffeeDetails from "../components/CoffeeDetails";
 import Loader from "../components/Loader";
 import SignIn from "../components/SignIn";
 import SingUp from "../components/SingUp";
+import Users from "../components/Users";
 
 export const router = createBrowserRouter([
     {
@@ -43,6 +44,12 @@ export const router = createBrowserRouter([
             {
                 path: '/signUp',
                 element: <SingUp></SingUp>
+            },
+            {
+                path: '/users',
+                element: <Users></Users>,
+                loader: ()=> fetch('http://localhost:3000/users'),
+                hydrateFallbackElement: <Loader></Loader>
             }
         ]
 
